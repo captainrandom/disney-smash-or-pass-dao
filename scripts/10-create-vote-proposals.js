@@ -11,6 +11,7 @@ if (!process.env.GOVERNANCE_TOKEN_ADDR || process.env.GOVERNANCE_TOKEN_ADDR === 
   console.log("🛑 GOVERNANCE_TOKEN_ADDR not found.");
 }
 
+
 // This is our governance contract.
 const vote = sdk.getVote(process.env.VOTING_CONTRACT_ADDRESS);
 
@@ -25,7 +26,7 @@ const token = sdk.getToken(process.env.GOVERNANCE_TOKEN_ADDR);
       {
         toAddress: token.getAddress(),
         nativeTokenValue: 0,
-        transacitonData: token.encoder.encode(
+        transactionData: token.encoder.encode(
           "mintTo", [
             vote.getAddress(),
             ethers.utils.parseUnits(amount.toString(), 18),
@@ -33,11 +34,7 @@ const token = sdk.getToken(process.env.GOVERNANCE_TOKEN_ADDR);
         ),
       }
     ];
-
-    console.log('execuitons', executions);
-    console.log('token address', token.getAddress());
-    console.log('vote address', vote.getAddress());
-    // console.log(ethers.utils.parseUnits(amount.toString(), 18));
+    
     await vote.propose(description, executions);
     console.log("Successfully created proposal to mint tokens");
   } catch (error) {
@@ -52,7 +49,7 @@ const token = sdk.getToken(process.env.GOVERNANCE_TOKEN_ADDR);
       {
         toAddress: token.getAddress(),
         nativeTokenValue: 0,
-        transacitonData: token.encoder.encode(
+        transactionData: token.encoder.encode(
           "transfer", [
             process.env.WALLET_ADDRESS,
             ethers.utils.parseUnits(amount.toString(), 18),
