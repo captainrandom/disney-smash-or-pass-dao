@@ -13,18 +13,20 @@ describe("My Dapp", function () {
   });
 
   describe("YourContract", function () {
-    it("Should deploy YourContract", async function () {
+    it("Should deploy YourContract", async function (done) {
       const YourContract = await ethers.getContractFactory("YourContract");
 
       myContract = await YourContract.deploy();
+      done();
     });
 
     describe("setPurpose()", function () {
-      it("Should be able to set a new purpose", async function () {
+      it("Should be able to set a new purpose", async function (done) {
         const newPurpose = "Test Purpose";
 
         await myContract.setPurpose(newPurpose);
         expect(await myContract.purpose()).to.equal(newPurpose);
+        done();
       });
 
       // Uncomment the event and emit lines in YourContract.sol to make this test pass
