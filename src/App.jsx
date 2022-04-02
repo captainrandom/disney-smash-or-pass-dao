@@ -151,10 +151,32 @@ const App = () => {
 	if (!address) {
 		return (
 			<div className="landing">
-				<h1>Welcome to Disney Smash or Pass DAO</h1>
-				<button onClick={connectWithMetamask} className="btn-hero">
-					Connect your wallet
-				</button>
+              <h1>Welcome to Disney Smash or Pass DAO</h1>
+              <button onClick={connectWithMetamask} className="btn-hero">
+                  Connect your wallet
+              </button>
+              <div className="slideshow-container">
+
+                <div className="mySlides fade">
+                  <div className="numbertext">1 / 3</div>
+                  <img src="https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg"/>
+                  <div className="text">Caption Text</div>
+                </div>
+
+                <div className="mySlides fade">
+                  <div className="numbertext">2 / 3</div>
+                  <img src="https://www.industrialempathy.com/img/remote/ZiClJf-1280w.avif"/>
+                  <div className="text">Caption Two</div>
+                </div>
+
+                <div className="mySlides fade">
+                  <div className="numbertext">3 / 3</div>
+                  <img src="https://cdn.pixabay.com/photo/2022/03/09/15/15/breakfast-7058063_1280.jpg"/>
+                    <div className="text">Caption Three</div>
+                </div>
+                <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+                <a class="next" onclick="plusSlides(1)">&#10095;</a>
+              </div>
 			</div>
 		);
 	}
