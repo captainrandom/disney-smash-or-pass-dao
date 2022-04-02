@@ -1,6 +1,7 @@
 import {useAddress, useMetamask, useEditionDrop, useToken, useVote} from '@thirdweb-dev/react';
 import {useState, useEffect, useMemo} from 'react';
 import {AddressZero} from "@ethersproject/constants";
+import SmashOrPassChooser from "./components/smash-or-pass-chooser";
 
 const App = () => {
     const address = useAddress();
@@ -149,12 +150,11 @@ const App = () => {
     };
 
 
+
     return (
         <div className="landing">
             <h1>Welcome to Disney Smash or Pass</h1>
-            <button onClick={connectWithMetamask} className="btn-hero">
-                Connect your wallet
-            </button>
+            <SmashOrPassChooser/>
         </div>
     );
     /*
