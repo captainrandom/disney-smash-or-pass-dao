@@ -1,11 +1,48 @@
-# buildspace x thirdweb - Build your own DAO with just Javascript
+# 🏗 Scaffold-ETH
 
-### **Welcome 👋**
-To get started with this course, clone this repo and follow these commands:
+> Sipping OE!
 
-1. Run `npm install` at the root of your directory
-2. Run `npm start` to start the project
-3. Start coding!
+This forks the Loogies branch and brings in a drinkable NFT...
 
-### **Questions?**
-Have some questions make sure you head over to your [buildspace Dashboard](https://app.buildspace.so/projects/COb520aae3-7925-42f4-a5e7-eaf718933766) and link your Discord account so you can get access to helpful channels and your instructor!
+---
+
+sip()
+
+![40 mov](https://user-images.githubusercontent.com/2653167/146295000-80a561f8-6b6c-4c6e-9e3b-fc29cb398019.gif)
+
+---
+
+wrap()
+
+ ![image](https://user-images.githubusercontent.com/2653167/146295077-ad7fcd07-2c90-4942-af2f-9782442e3192.png)
+
+---
+
+1. Mint OE NFTs (not sure if we want this to be free? Currently priced, on a curve)
+2. You can sip from your OE NFT (only the owner can sip)
+3. Sipping your NFT changes the amount of OE left! (only 13 sips per OE)
+4. Your address's number of sips is tracked, and if you drink more than a whole Forty you are DRUNK!
+
+
+# 🏄‍♂️ Quick Start
+
+The usual jazz...
+
+```
+git clone -b sipping-oe https://github.com/scaffold-eth/scaffold-eth sipping-oe
+```
+
+```
+cd sipping-oe
+yarn install
+yarn chain
+```
+
+```
+cd sipping-oe
+yarn start
+```
+
+```
+yarn deploy
+```
