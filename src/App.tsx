@@ -1,7 +1,7 @@
 import {useAddress, useEditionDrop, useMetamask} from '@thirdweb-dev/react';
 import {useEffect} from 'react';
 import disneyCharacters from "./constants";
-import {Container} from "react-bootstrap";
+import {Button, Container} from "react-bootstrap";
 import {TokenConverter} from "./utils/token-converter";
 import {ImageUrl} from "./models/imageUrl";
 import {GifCreator} from "./utils/gif-creator";
@@ -19,20 +19,20 @@ const App = () => {
         return addr.substring(0, 6) + "..." + addr.substring(addr.length - 4);
     };
 
-    useEffect(() => {
-        if (!address || !editionDrop) {
-            return;
-        }
-
-        const checkBalance = async () => {
-            try {
-                const balance = await editionDrop.balanceOf(address, 0);
-            } catch (error) {
-                console.error("Failed to get balance", error);
-            }
-        };
-        checkBalance();
-    }, [address, editionDrop]);
+    // useEffect(() => {
+    //     if (!address || !editionDrop) {
+    //         return;
+    //     }
+    //
+    //     const checkBalance = async () => {
+    //         try {
+    //             const balance = await editionDrop.balanceOf(address, 0);
+    //         } catch (error) {
+    //             console.error("Failed to get balance", error);
+    //         }
+    //     };
+    //     checkBalance();
+    // }, [address, editionDrop]);
 
     const mintNft = async (tokenId: string, images: ImageUrl[]) => {
         if (!editionDrop) {
@@ -46,14 +46,16 @@ const App = () => {
         } catch (error) {
             console.error("Failed to claim NFT", error);
 
-            const gifDataUrl = await GifCreator.createGif(images);
             // if we failed let's try minting the token
+            const gifDataUrl = await GifCreator.createGif(images);
             try {
                 await editionDrop.createBatch([{
                     name: `DSM#${tokenId}`,
                     description: "Disney Smash or Pass containing only smash characters",
                     image: gifDataUrl,
+                    // animation_url:
                 }])
+                console.log('sucessfully created batch')
             } catch (error) {
                 console.error("failed to create the new NFT", error);
             }
@@ -65,25 +67,28 @@ const App = () => {
         const tokenConverter = new TokenConverter();
         const tokenId = tokenConverter.getTokenId(chosenImages, fullImageList);
         console.log('token id:', tokenId)
+        // const gifDataUrl = await GifCreator.createGif(chosenImages);
+        await mintNft(tokenId, chosenImages)
     }
 
-    if (!address) {
-        return (
-            <div className="landing">
-                <h1>Welcome to Disney Smash or Pass DAO</h1>
-                <button onClick={connectWithMetamask} className="btn-hero">
-                    Connect your wallet
-                </button>
-            </div>
-        );
-    }
+    const connectWalletOrNormalDisplay = ((address) => {
+        if (address) {
+            return (<div>
+                <SmashOrPassChooser doneCallback={doneCallaback} images={fullImageList}/>
+                <DisplayOwnedNfts/>
+            </div>)
+        } else {
+            return <Button variant="dark" onClick={connectWithMetamask}>
+                Connect your wallet
+            </Button>
+        }
+    })(address)
 
     return (
         <Container>
             <div className="landing">
                 <h1>Welcome to Disney Smash or Pass</h1>
-                <SmashOrPassChooser doneCallback={doneCallaback} images={fullImageList}/>
-                <DisplayOwnedNfts/>
+                {connectWalletOrNormalDisplay}
             </div>
         </Container>
     );
