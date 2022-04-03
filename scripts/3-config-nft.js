@@ -16,7 +16,7 @@ const editionDrop = sdk.getEditionDrop(process.env.MEMBERSHIP_CONTRACT_ADDR);
       {
         name: "Jasmine putting on the moves",
         description: "This NFT will give you access to DisneySmashOrPassDAO",
-        image: readFileSync("scripts/assets/jasmine_membership.gif"),
+        image: readFileSync("scripts/disney_characters/jasmine_membership.gif"),
       },
     ]);
     console.log("Successfully created a new NFT in the drop!");

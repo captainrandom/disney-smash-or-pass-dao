@@ -7,7 +7,7 @@ import { readFileSync } from "fs";
     const editionDropAddress = await sdk.deployer.deployEditionDrop({
       name: "DisneySmashOrPassDAO Membership",
       description: "A DAO that generates an nft when 'voting' for who you'd smash or pass, disney characters edition",
-      image: readFileSync("scripts/assets/jasmine_membership.gif"),
+      image: readFileSync("scripts/disney_characters/jasmine_membership.gif"),
       primary_sale_recipient: AddressZero,
     });
 

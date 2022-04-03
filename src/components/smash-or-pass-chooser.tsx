@@ -1,8 +1,11 @@
-import {Col, Row} from "react-bootstrap";
-import {MouseEvent, useState} from "react";
+import {Button, Col, Row} from "react-bootstrap";
+import {useState} from "react";
+import {ImageUrl} from "../models/imageUrl";
+import * as gifshot from 'gifshot';
 
 interface SmashOrPassChooserProps {
-    images: string[]
+    images: ImageUrl[];
+    doneCallback: Function;
 }
 
 const SmashOrPassChooser = (props: SmashOrPassChooserProps) => {
@@ -15,30 +18,36 @@ const SmashOrPassChooser = (props: SmashOrPassChooserProps) => {
 
     const currentImages = [...props.images];
     const [currentImgIndex, setCurrentImgIndex] = useState(getRandomInt(0, currentImages.length));
-    const smashImages = [];
+    const [smashImages, setSmashImages] = useState(new Array<ImageUrl>());
+    const [gifUrl, setGifUrl] = useState("");
 
     const makeChoice = (choice: string, index: number) => {
-        switch (choice) {
-            case "smash":
-                smashImages.push(currentImages[index]);
+        if (choice === "smash") {
+            setSmashImages([...smashImages, currentImages[index]]);
+            console.log('smashImages', smashImages);
         }
-
         currentImages.splice(index, 1);
         setCurrentImgIndex(getRandomInt(0, currentImages.length));
     }
-    return (<Row>
-        <Col>
-            <Row><Col><img src={currentImages[currentImgIndex]}/></Col></Row>
-            <Row>
-                <Col>
-                    <button onClick={() => makeChoice("smash", currentImgIndex)}>Smash</button>
-                </Col>
-                <Col>
-                    <button onClick={() => makeChoice("pass", currentImgIndex)}>Pass</button>
-                </Col>
-            </Row>
-        </Col>
-    </Row>);
+    const onDoneCallback = (smashImages: ImageUrl[]) => {
+    }
+    return (<div>
+        <Row><Col><img src={currentImages[currentImgIndex].imageUrl}/></Col></Row>
+        <Row>
+            <Col xs={3}>
+                <Button variant="success" className="mr-1" onClick={() => makeChoice("smash", currentImgIndex)}>Smash</Button>
+            </Col>
+            <Col xs={3}>
+                <Button variant="danger" onClick={() => makeChoice("pass", currentImgIndex)}>Pass</Button>
+            </Col>
+        </Row>
+        <Row>
+            <Button onClick={() => { onDoneCallback(smashImages); props.doneCallback(smashImages)}}>Create NFT</Button>
+        </Row>
+        <Row>
+            <img src={gifUrl}/>
+        </Row>
+    </div>);
 }
 
 export default SmashOrPassChooser;
