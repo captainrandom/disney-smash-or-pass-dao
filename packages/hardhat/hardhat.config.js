@@ -26,7 +26,7 @@ const { isAddress, getAddress, formatUnits, parseUnits } = utils;
 //
 // Select the network you want to deploy to here:
 //
-const defaultNetwork = "optimism";
+const defaultNetwork = "localhost";
 
 const mainnetGwei = 21;
 
@@ -313,7 +313,7 @@ module.exports = {
     },
   },
   etherscan: {
-    apiKey: "DNXJA8RX2Q3VZ4URQIWP7Z68CJXQZSC6AW",
+    apiKey: "T58HB6S34AXWRGGA23HCIIG1R1ACNTJYNR",
   },
 };
 
