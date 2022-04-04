@@ -1,6 +1,6 @@
 {
-  "short_name": "Buildspace x thirdweb - DAO with JavaScript",
-  "name": "Build your own DAO with just Javascript in a weekend",
+  "short_name": "React App",
+  "name": "Create React App Sample",
   "icons": [
     {
       "src": "favicon.ico",
