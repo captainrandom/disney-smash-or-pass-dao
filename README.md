@@ -1,11 +1,13 @@
-# buildspace x thirdweb - Build your own DAO with just Javascript
+# Disney Smash or Pass Slideshow NFT
+This is the html slideshow using IPFS to host the react website
+in order to display the images you chose to smash.
 
-### **Welcome 👋**
-To get started with this course, clone this repo and follow these commands:
 
-1. Run `npm install` at the root of your directory
-2. Run `npm start` to start the project
-3. Start coding!
+## Current Deployed Version
+https://gateway.pinata.cloud/ipfs/QmUi6PqRnQKAN6cYpqFTUeEr8F3UXT2p35W8MPBDwCWUnH/index.html?tokenId=FF
 
-### **Questions?**
-Have some questions make sure you head over to your [buildspace Dashboard](https://app.buildspace.so/projects/COb520aae3-7925-42f4-a5e7-eaf718933766) and link your Discord account so you can get access to helpful channels and your instructor!
+### Getting Started 
+
+1. Run `yarn install` at the root of your directory
+2. Run `yarn build` to build a new version
+3. Upload `/build` directory to ipfs and save the CID
