@@ -1,6 +1,8 @@
 import {Col, Row} from "react-bootstrap";
 import {EditionDrop} from "@thirdweb-dev/sdk";
-import {useEffect, useState} from "react";
+import {ReactElement, useEffect, useState} from "react";
+import {EditionMetadataOwner} from "@thirdweb-dev/sdk/dist/schema/tokens/edition";
+import NFTDisplay from "./NFTDisplay";
 
 interface DisplayOnedNFTs {
     contract: EditionDrop | undefined
@@ -8,16 +10,14 @@ interface DisplayOnedNFTs {
 }
 
 const DisplayOwnedNfts = (props: DisplayOnedNFTs) => {
-    const [nftImgs, setNftImgs] = useState(new Array<Element>())
+    const [nftImgs, setNftImgs] = useState(new Array<ReactElement>())
     useEffect(() => {
         (async () => {
             const metadataArr = await props.contract?.getOwned(props.address)
             console.log('metadataArr', metadataArr)
-            if(metadataArr) {
+            if (metadataArr) {
                 const newImgElements = metadataArr.map((nftData) => {
-                    return <Col>
-                        <img src={nftData.metadata?.image}/>
-                    </Col>
+                    return <NFTDisplay nftData={nftData}/>
                 })
                 setNftImgs(newImgElements)
             }
@@ -26,6 +26,7 @@ const DisplayOwnedNfts = (props: DisplayOnedNFTs) => {
 
     return (
         <div>
+            <Row><h2>Owned NFTs</h2></Row>
             {nftImgs}
         </div>
     );
