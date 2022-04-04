@@ -16,10 +16,9 @@ const SmashOrPassChooser = (props: SmashOrPassChooserProps) => {
         return Math.floor(Math.random() * (max - min) + min); //The maximum is exclusive and the minimum is inclusive
     }
 
-    const currentImages = [...props.images];
+    const [currentImages, setCurrentImages] = useState(props.images);
     const [currentImgIndex, setCurrentImgIndex] = useState(getRandomInt(0, currentImages.length));
     const [smashImages, setSmashImages] = useState(new Array<ImageUrl>());
-    const [gifUrl, setGifUrl] = useState("");
 
     const makeChoice = (choice: string, index: number) => {
         if (choice === "smash") {
@@ -28,8 +27,17 @@ const SmashOrPassChooser = (props: SmashOrPassChooserProps) => {
         }
         currentImages.splice(index, 1);
         setCurrentImgIndex(getRandomInt(0, currentImages.length));
+        setCurrentImages(currentImages);
     }
-    const onDoneCallback = (smashImages: ImageUrl[]) => {
+
+    const onDoneCallback = () => {
+        const success = props.doneCallback(smashImages);
+        if (success) {
+            // want to clear state here!
+            setCurrentImages(props.images)
+            setCurrentImgIndex(getRandomInt(0, currentImages.length))
+            setSmashImages([])
+        }
     }
     return (<div>
         <Row><Col><img src={currentImages[currentImgIndex].imageUrl}/></Col></Row>
@@ -42,10 +50,7 @@ const SmashOrPassChooser = (props: SmashOrPassChooserProps) => {
             </Col>
         </Row>
         <Row>
-            <Button onClick={() => { onDoneCallback(smashImages); props.doneCallback(smashImages)}}>Create NFT</Button>
-        </Row>
-        <Row>
-            <img src={gifUrl}/>
+            <Button onClick={onDoneCallback}>Create NFT</Button>
         </Row>
     </div>);
 }

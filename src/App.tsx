@@ -35,48 +35,50 @@ const App = () => {
     //     checkBalance();
     // }, [address, editionDrop]);
 
-    const mintNft = async (tokenId: string, images: ImageUrl[]) => {
+    const mintNft = async (tokenId: string, images: ImageUrl[]): Promise<boolean> => {
         if (!editionDrop) {
             console.error("NFT contract is null!")
-            return;
+            return false;
         }
 
         try {
             await editionDrop.claim(tokenId, 1);
             console.log(`🌊 Successfully Minted! Check it out on OpenSea: https://testnets.opensea.io/assets/${editionDrop.getAddress()}/${tokenId}`);
+            return true;
         } catch (error) {
             console.error("Failed to claim NFT", error);
 
             // if we failed let's try minting the token
-            // const gifDataUrl = await GifCreator.createGif(images);
+            const gifDataUrl = await GifCreator.createGif(images);
             try {
                 await editionDrop.createBatch([{
                     name: `DSM#${tokenId}`,
                     description: "Disney Smash or Pass containing only smash characters",
-                    // image: gifDataUrl,
-                    animation_url: new Buffer(`https://gateway.pinata.cloud/ipfs/QmUi6PqRnQKAN6cYpqFTUeEr8F3UXT2p35W8MPBDwCWUnH/index.html?tokenId=${tokenId}`),
+                    image: gifDataUrl,
+                    animation_url:`https://gateway.pinata.cloud/ipfs/QmUi6PqRnQKAN6cYpqFTUeEr8F3UXT2p35W8MPBDwCWUnH/index.html?tokenId=${tokenId}`,
                 }])
                 console.log('sucessfully created batch')
+                return true;
             } catch (error) {
                 console.error("failed to create the new NFT", error);
+                return false;
             }
         }
     };
 
     const fullImageList = disneyCharacters.allCharacters;
-    const doneCallaback = async (chosenImages: ImageUrl[]) => {
+    const doneCallaback = async (chosenImages: ImageUrl[]): Promise<boolean> => {
         const tokenConverter = new TokenConverter();
         const tokenId = tokenConverter.getTokenId(chosenImages, fullImageList);
         console.log('token id:', tokenId)
-        // const gifDataUrl = await GifCreator.createGif(chosenImages);
-        await mintNft(tokenId, chosenImages)
+        return mintNft(tokenId, chosenImages);
     }
 
     const connectWalletOrNormalDisplay = ((address) => {
         if (address) {
             return (<div>
                 <SmashOrPassChooser doneCallback={doneCallaback} images={fullImageList}/>
-                <DisplayOwnedNfts/>
+                <DisplayOwnedNfts contract={editionDrop} address={address}/>
             </div>)
         } else {
             return <Button variant="dark" onClick={connectWithMetamask}>
