@@ -30,8 +30,9 @@ const SmashOrPassChooser = (props: SmashOrPassChooserProps) => {
         setCurrentImages(currentImages);
     }
 
-    const onDoneCallback = () => {
-        const success = props.doneCallback(smashImages);
+    const onDoneCallback = async () => {
+        const success = await props.doneCallback(smashImages);
+        console.log('done callback state', success);
         if (success) {
             // want to clear state here!
             setCurrentImages(props.images)
