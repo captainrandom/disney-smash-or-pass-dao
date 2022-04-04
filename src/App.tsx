@@ -7,6 +7,7 @@ import {ImageUrl} from "./models/imageUrl";
 import {GifCreator} from "./utils/gif-creator";
 import SmashOrPassChooser from "./components/smash-or-pass-chooser";
 import DisplayOwnedNfts from "./components/display-owned-nfts";
+import {Buffer} from 'buffer';
 
 const App = () => {
     const address = useAddress();
@@ -47,13 +48,13 @@ const App = () => {
             console.error("Failed to claim NFT", error);
 
             // if we failed let's try minting the token
-            const gifDataUrl = await GifCreator.createGif(images);
+            // const gifDataUrl = await GifCreator.createGif(images);
             try {
                 await editionDrop.createBatch([{
                     name: `DSM#${tokenId}`,
                     description: "Disney Smash or Pass containing only smash characters",
-                    image: gifDataUrl,
-                    // animation_url:
+                    // image: gifDataUrl,
+                    animation_url: new Buffer(`https://gateway.pinata.cloud/ipfs/QmUi6PqRnQKAN6cYpqFTUeEr8F3UXT2p35W8MPBDwCWUnH/index.html?tokenId=${tokenId}`),
                 }])
                 console.log('sucessfully created batch')
             } catch (error) {
